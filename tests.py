@@ -1,6 +1,6 @@
 import unittest
 
-from life import evolve_universe, cell_transition, cell_neighbours_count
+from life import evolve_universe, evolve_cell, cell_transition, cell_neighbours_count
 
 
 class GameRulesTest(unittest.TestCase):
@@ -40,6 +40,8 @@ class GameRulesTest(unittest.TestCase):
 
 class UniverseTest(unittest.TestCase):
     def setUp(self):
+        self.live_cell_state = True
+        self.dead_cell_state = False
         self.empty_universe = set()
         self.block_universe = set([(0, 0), (0, 1), (1, 0), (1, 1)])
         self.horizontal_blinker_universe = set([(0, 1), (1, 1), (2, 1)])
@@ -64,6 +66,27 @@ class UniverseTest(unittest.TestCase):
         cell_with_3_neighbours = (1, 0)
         count = cell_neighbours_count(cell_with_3_neighbours, self.horizontal_blinker_universe)
         self.assertEqual(count, 3)
+
+    def test_cell_does_not_reproduce_in_empty_universe(self):
+        a_cell = (0, 0)
+        next_state = evolve_cell(a_cell, self.empty_universe)
+        self.assertEqual(next_state, self.dead_cell_state)
+
+    def test_cell_dies_in_lonely_universe(self):
+        cell = (0, 0)
+        lonely_universe = set([cell])
+        next_state = evolve_cell(cell, lonely_universe)
+        self.assertEqual(next_state, self.dead_cell_state)
+
+    def test_cell_survives_in_horizontal_blinker_universe(self):
+        cell = (1, 1)
+        next_state = evolve_cell(cell, self.horizontal_blinker_universe)
+        self.assertEqual(next_state, self.live_cell_state)
+
+    def test_cell_reproduces_in_horizontal_blinker_universe(self):
+        cell = (1, 0)
+        next_state = evolve_cell(cell, self.horizontal_blinker_universe)
+        self.assertEqual(next_state, self.live_cell_state)
 
     def test_empty_universe_evolves_into_empty_universe(self):
         new_universe = evolve_universe(self.empty_universe)

@@ -4,6 +4,12 @@ def evolve_universe(universe):
     return universe
 
 
+def evolve_cell(cell, universe):
+    """Return the next state of the cell at the given coordinates"""
+
+    return cell_transition(cell in universe, cell_neighbours_count(cell, universe))
+
+
 def cell_transition(state, neighbours):
     """Implements game rules and returns the new state of the cell based on
     previous conditons passed as arguments"""
