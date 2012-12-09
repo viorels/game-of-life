@@ -1,4 +1,7 @@
 
+def evolve_universe(universe):
+    return set()
+
 class World():
     def __init__(self):
         self.cells = {}
@@ -65,9 +68,9 @@ class DeadCell(Cell):
         else:
             return DeadCell(self.x, self.y)
 
-w = World()
-for x, y in ((1, 1), (1, 2), (1, 3)):
-    w.add(LiveCell(x, y))
-print w
-print w.next_gen()
+# w = World()
+# for x, y in ((1, 1), (1, 2), (1, 3)):
+#     w.add(LiveCell(x, y))
+# print w
+# print w.next_gen()
 
