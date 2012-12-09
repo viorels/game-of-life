@@ -1,7 +1,7 @@
 
 
 def evolve_universe(universe):
-    return set()
+    return universe
 
 
 def cell_transition(state, neighbours):
