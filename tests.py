@@ -1,6 +1,6 @@
 import unittest
 
-from life import evolve_universe, cell_transition
+from life import evolve_universe, cell_transition, cell_neighbours_count
 
 
 class GameRulesTest(unittest.TestCase):
@@ -42,8 +42,28 @@ class UniverseTest(unittest.TestCase):
     def setUp(self):
         self.empty_universe = set()
         self.block_universe = set([(0, 0), (0, 1), (1, 0), (1, 1)])
-        self.live_cell_state = True
-        self.dead_cell_state = False
+        self.horizontal_blinker_universe = set([(0, 1), (1, 1), (2, 1)])
+        self.vertical_blinker_universe = set([(1, 0), (1, 1), (1, 2)])
+
+    def test_empty_universe_cell_has_0_neighbours(self):
+        a_cell = (0, 0)
+        count = cell_neighbours_count(a_cell, self.empty_universe)
+        self.assertEqual(count, 0)
+
+    def test_cell_has_1_neighbours(self):
+        cell_with_1_neighbour = (3, 0)
+        count = cell_neighbours_count(cell_with_1_neighbour, self.horizontal_blinker_universe)
+        self.assertEqual(count, 1)
+
+    def test_cell_has_2_neighbours(self):
+        cell_with_2_neighbours = (2, 0)
+        count = cell_neighbours_count(cell_with_2_neighbours, self.horizontal_blinker_universe)
+        self.assertEqual(count, 2)
+
+    def test_cell_has_3_neighbours(self):
+        cell_with_3_neighbours = (1, 0)
+        count = cell_neighbours_count(cell_with_3_neighbours, self.horizontal_blinker_universe)
+        self.assertEqual(count, 3)
 
     def test_empty_universe_evolves_into_empty_universe(self):
         new_universe = evolve_universe(self.empty_universe)
@@ -52,6 +72,10 @@ class UniverseTest(unittest.TestCase):
     def test_universe_with_block_evolves_into_block(self):
         new_universe = evolve_universe(self.block_universe)
         self.assertEqual(new_universe, self. block_universe)
+
+    def test_universe_with_horizontal_blinker_evolves_into_vertical_blinker(self):
+        new_universe = evolve_universe(self.horizontal_blinker_universe)
+        self.assertEqual(new_universe, self.vertical_blinker_universe)
 
 
 if __name__ == '__main__':
