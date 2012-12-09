@@ -1,6 +1,6 @@
 import unittest
 
-from life import evolve_universe, evolve_cell, cell_transition, cell_neighbours_count
+from life import evolve_universe, evolve_cell, cell_transition, live_neighbours_count
 
 
 class GameRulesTest(unittest.TestCase):
@@ -49,22 +49,22 @@ class UniverseTest(unittest.TestCase):
 
     def test_empty_universe_cell_has_0_neighbours(self):
         a_cell = (0, 0)
-        count = cell_neighbours_count(a_cell, self.empty_universe)
+        count = live_neighbours_count(a_cell, self.empty_universe)
         self.assertEqual(count, 0)
 
     def test_cell_has_1_neighbours(self):
         cell_with_1_neighbour = (3, 0)
-        count = cell_neighbours_count(cell_with_1_neighbour, self.horizontal_blinker_universe)
+        count = live_neighbours_count(cell_with_1_neighbour, self.horizontal_blinker_universe)
         self.assertEqual(count, 1)
 
     def test_cell_has_2_neighbours(self):
         cell_with_2_neighbours = (2, 0)
-        count = cell_neighbours_count(cell_with_2_neighbours, self.horizontal_blinker_universe)
+        count = live_neighbours_count(cell_with_2_neighbours, self.horizontal_blinker_universe)
         self.assertEqual(count, 2)
 
     def test_cell_has_3_neighbours(self):
         cell_with_3_neighbours = (1, 0)
-        count = cell_neighbours_count(cell_with_3_neighbours, self.horizontal_blinker_universe)
+        count = live_neighbours_count(cell_with_3_neighbours, self.horizontal_blinker_universe)
         self.assertEqual(count, 3)
 
     def test_cell_does_not_reproduce_in_empty_universe(self):
@@ -87,6 +87,11 @@ class UniverseTest(unittest.TestCase):
         cell = (1, 0)
         next_state = evolve_cell(cell, self.horizontal_blinker_universe)
         self.assertEqual(next_state, self.live_cell_state)
+
+    def test_cell_does_not_reproduces_in_horizontal_blinker_universe(self):
+        cell = (0, 0)
+        next_state = evolve_cell(cell, self.horizontal_blinker_universe)
+        self.assertEqual(next_state, self.dead_cell_state)
 
     def test_empty_universe_evolves_into_empty_universe(self):
         new_universe = evolve_universe(self.empty_universe)
