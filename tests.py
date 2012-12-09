@@ -105,6 +105,10 @@ class UniverseTest(unittest.TestCase):
         new_universe = evolve_universe(self.horizontal_blinker_universe)
         self.assertEqual(new_universe, self.vertical_blinker_universe)
 
+    def test_universe_with_vertical_blinker_evolves_into_horizontal_blinker(self):
+        new_universe = evolve_universe(self.vertical_blinker_universe)
+        self.assertEqual(new_universe, self.horizontal_blinker_universe)
+
 
 if __name__ == '__main__':
     unittest.main()
