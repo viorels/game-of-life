@@ -1,6 +1,8 @@
 
+
 def evolve_universe(universe):
     return set()
+
 
 class World():
     def __init__(self):
