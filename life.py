@@ -1,4 +1,4 @@
-from itertools import chain
+from itertools import chain, product
 
 
 live_cell = True
@@ -38,10 +38,9 @@ def cell_transition(state, neighbours):
 def all_cell_neighbours(cell):
     """Return coordinates for all neighbours of the given cell, dead or alive"""
     x, y = cell
-    offsets = ((-1,  1), (0,  1), (1,  1),
-               (-1,  0),          (1,  0),
-               (-1, -1), (0, -1), (1, -1))
-    return [(x + ox, y + oy) for ox, oy in offsets]
+    relative = [offset for offset in product((-1, 0, 1), repeat=2)
+                if offset != (0, 0)]
+    return [(x + rx, y + ry) for rx, ry in relative]
 
 
 def live_neighbours_count(cell, universe):
