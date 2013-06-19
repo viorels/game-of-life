@@ -20,18 +20,18 @@ def cell_transition(state, neighbours):
     """Implements game rules and returns the new state of the cell based on
     previous conditons passed as arguments"""
     new_state = None
-    if state is True:               # previous state is live
+    if state is live_cell:
         if neighbours < 2:          # underpopulation
-            new_state = False
+            new_state = dead_cell
         elif 2 <= neighbours <= 3:  # healthy
-            new_state = True
+            new_state = live_cell
         elif neighbours > 3:        # overpopulation
-            new_state = False
-    else:                           # previous state is dead
+            new_state = dead_cell
+    elif state is dead_cell:
         if neighbours == 3:         # reproduction
-            new_state = True
+            new_state = live_cell
         else:                       # no reproduction
-            new_state = False
+            new_state = dead_cell
     return new_state
 
 
