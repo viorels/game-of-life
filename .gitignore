@@ -1,2 +1,12 @@
+# Python
 *.pyc
 *.sublime-*
+
+# Scala
+*.class
+.classpath
+.project
+.settings
+.cache
+.worksheet
+bin
