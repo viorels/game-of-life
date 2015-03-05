@@ -6,18 +6,11 @@ package Cell {
 	has 'x', is => 'ro', isa => 'Int';
 	has 'y', is => 'ro', isa => 'Int';
 
-	use overload
-		'""' => \&stringify,
-		'cmp' => \&compare;
+	use overload '""' => \&stringify;
 
 	sub stringify {
 		my $self = shift;
 		return sprintf '(%d,%d)', $self->x, $self->y;
-	}
-
-	sub compare {
-		my ($self, $other) = @_;
-		return $self->x <=> $other->x || $self->y <=> $other->y;
 	}
 }
 
